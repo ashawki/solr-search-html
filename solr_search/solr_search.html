@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Solr Search</title>
+	<link type="text/css" rel="stylesheet" href="css/solr_search.css">
+	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/cookies.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/solr_search.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body onload="onBodyLoad_SolrSearch();">
+	<div id="wrap">
+		<div id="header">
+			<h1><span class="text_name">Solr Search</span> <span class="line_tiny">(1.0.20140329)&nbsp;&nbsp;&nbsp;&nbsp;(<a href="readme.html">Readme</a> | <a href="search_syntax.html">Syntax</a>)</span></h1>
+			<h2>Simple interface for Apache Solr<sup class="line_mini">TM</sup> search server</h2>
+			<div id="toggle_header" class="toggle_header" onclick="toggleHeader(true, true);">&nbsp;˄&nbsp;</div>
+		</div>
+		<div id="left">
+			<div id="left_form_box">
+				<div id="current_search">
+					<h3>Current Search</h3>
+					<div><span class="query_label">File path:</span> <span id="file_path_query" class="query_value"></span></div>
+					<div><span class="query_label">File content:</span> <span id="file_content_query" class="query_value"></span></div>
+					<!-- <div><span class="query_label">Whole Word:</span> <span id="whole_word_query" class="query_value"></span></div> -->
+					<div><span class="query_label">Free query:</span> <span id="free_query" class="query_value"></span></div>
+					<div><span class="query_label">Filter query:</span> <span id="filter_query" class="query_value"></span></div>
+					<div><span class="query_label">Collection:</span> <span id="collection_query" class="query_value"></span></div>
+				</div>
+				<form name="form_left" onsubmit="return false;">
+					<div>
+						<input type="button" id="tab_button_search_form" onclick="setLeftFormActiveTab(TAB_INDEX_SEARCH);" value="Search">
+						<input type="button" id="tab_button_free_search" onclick="setLeftFormActiveTab(TAB_INDEX_FREE_SEARCH);" value="Free Search">
+						<input type="button" id="tab_button_options" onclick="setLeftFormActiveTab(TAB_INDEX_OPTIONS);" value="Options">
+					</div>
+					<div id="tab_div_search_form" class="tab_div_not_selected">
+						<!-- <h3>Search</h3> -->
+						<div class="field_label_search"><span>File path:</span></div>
+						<input name="file_path" type="text" class="field_search" autocomplete="off">
+						<div class="field_label_search"><span>File content:</span></div>
+						<input name="file_content" type="text" class="field_search" autocomplete="off">
+						<div class="field_label_search"><span>Filter Query:</span></div>
+						<input name="filter_query_search" type="text" class="field_search" autocomplete="off">
+						<div class="field_label_search"><span>Collections:</span></div>
+						<!-- <select name="solr_cores_search" class="field_select_search"><option value=""></option></select> -->
+						<select name="solr_cores_search" class="field_select_search"></select>
+						<!-- <textarea name="file_content"></textarea> -->
+						<!-- <input name="whole_word" type="checkbox" checked="checked"> -->
+						<!-- <input name="whole_word" type="checkbox"> -->
+						<!-- <span class="field_label_search">Whole Word</span> -->
+						<input name="utf8" type="hidden" value="&#x2713;" />
+						<!-- <input name="SearchButton" type="submit" value="Search" onclick="saveOptionsToCookie();search(document.form_left.file_path.value, document.form_left.file_content.value, document.form_left.whole_word.checked);"> -->
+						<input name="SearchButton" type="submit" class="field_submit_search" value="Search" onclick="if((''==document.form_left.file_path.value)&&(''==document.form_left.file_content.value)){document.form_left.file_path.value='*';};search(getSearchCore(), document.form_left.file_path.value, document.form_left.file_content.value, document.form_left.filter_query_search.value);">
+					</div>
+					<div id="tab_div_free_search" class="tab_div_not_selected">
+						<div class="field_label_search"><span>Query</span><span class="line_small"> (Solr q param only)</span><span>:</span></div>
+						<textarea name="free_query" class="field_textarea_search" rows="4"></textarea>
+						<div class="field_label_search"><span>Filter Query</span><span class="line_small"> (Solr fq param only)</span><span>:</span></div>
+						<textarea name="filter_query_free_search" class="field_textarea_search" rows="2"></textarea>
+						<div class="field_label_search"><span>Collections:</span></div>
+						<!-- <select name="solr_cores_free_search" class="field_select_search"><option value=""></option></select> -->
+						<select name="solr_cores_free_search" class="field_select_search"></select>
+						<input name="FreeSearchButton" type="submit" class="field_submit_search" value="Search" onclick="if(''==document.form_left.free_query.value){document.form_left.free_query.value='*.*';};search_free(getFreeSearchCore(), document.form_left.free_query.value, document.form_left.filter_query_free_search.value);">
+					</div>
+					<div id="tab_div_options" class="tab_div_not_selected">
+						<div class="field_label_options">Number of results per page:</div>
+						<input name="options_results_per_page" type="text" class="field_options" autocomplete="off">
+						<div class="field_label_options">Results as hyperlinks:</div>
+						<input name="options_results_hyperlink" type="checkbox" class="field_options" autocomplete="off">
+						<div class="field_label_options">Show snippet numbers:</div>
+						<input name="options_results_snippet_numbers" type="checkbox" class="field_options" autocomplete="off">
+						<div class="field_label_options">Show directories in results:</div>
+						<input name="options_results_directories" type="checkbox" class="field_options" autocomplete="off">
+						<div class="field_label_options">Results font-family:</div>
+						<input name="options_results_font_family" type="text" class="field_options" autocomplete="off">
+						<div class="field_label_options">Results font-size:</div>
+						<input name="options_results_font_size" type="text" class="field_options" autocomplete="off">
+						<div class="field_label_options">Results font-color:</div>
+						<input name="options_results_font_color" type="text" class="field_options" autocomplete="off">
+						<div class="field_label_options">Selected result font-color:</div>
+						<input name="options_results_selected_font_color" type="text" class="field_options" autocomplete="off">
+						<div class="field_label_options">Selected result background-color:</div>
+						<input name="options_results_selected_bg_color" type="text" class="field_options" autocomplete="off">
+						<br>
+						<div class="field_label_options">Highlighting:</div>
+						<input name="options_highlighting_enabled" type="checkbox" class="field_options" autocomplete="off">
+						<div><div class="field_label_highlighting">Max. number of snippets:</div>
+						<input name="options_snippets_maximum" type="text" class="field_options" autocomplete="off"></div>
+						<div><div class="field_label_highlighting">Snippet length:</div>
+						<input name="options_snippet_length" type="text" class="field_options" autocomplete="off"></div>
+						<div><div class="field_label_highlighting">Max. analyzed characters:</div>
+						<input name="options_analyzed_chars_maximum" type="text" class="field_options" autocomplete="off"></div>
+						<div><div class="field_label_highlighting_short">Pre:</div>
+						<input name="options_highlighting_pre" type="text" class="field_options_long" autocomplete="off"></div>
+						<div><div class="field_label_highlighting_short">Post:</div>
+						<input name="options_highlighting_post" type="text" class="field_options_long" autocomplete="off"></div>
+						<div class="field_label_highlighting">Snippets font-family:</div>
+						<input name="options_highlighting_font_family" type="text" class="field_options" autocomplete="off">
+						<div class="field_label_highlighting">Snippets font-size:</div>
+						<input name="options_highlighting_font_size" type="text" class="field_options" autocomplete="off">
+						<div class="field_label_highlighting">Snippets font-color:</div>
+						<input name="options_highlighting_font_color" type="text" class="field_options" autocomplete="off">
+						<br>
+						<input name="OptionsDefaultsButton" type="button" class="field_submit_options" value="Defaults" onclick="optionsDefaults();">
+						<input name="OptionsLoadButton" type="button" class="field_submit_options" value="Load" onclick="optionsLoad();">
+						<input name="OptionsSaveButton" type="button" class="field_submit_options" value="Save" onclick="optionsSave();">
+					</div>
+				</form>
+			</div>
+			<!-- <div class="clear"></div> -->
+		</div>
+		<div id="right">
+			<div id="search_results">
+				<pre id="solr_q"></pre>
+				<pre id="solr_q_content"></pre>
+				<pre id="solr_fq"></pre>
+				<pre id="solr_select_url"></pre>
+				<pre id="solr_select_url_highlight"></pre>
+				<div id="navigation">
+					<!--  <ul id="pager">
+						<li><span class="pager-disabled pager-prev">&lt;</span></li>
+						<li><span class="pager-current">1</span></li>
+						<li><span class="pager-disabled pager-next">&gt;</span></li>
+					</ul> -->
+					<div id="pager-header" class="background_no_repeat">
+						<form name="results_page_form" class="results_page_form" onsubmit="return false;">
+							<span id="results_page_previous">&lt;&lt;</span>
+							<span> page </span>
+							<input type="text" name="results_page_number" class="results_page_number"><span id="results_page_last"></span>
+							<input type="submit" name="results_page_go_button" class="results_page_go_button" value="Go">
+							<span id="results_page_next">&gt;&gt;</span>
+							<textarea id="textarea_html_escape"></textarea>
+						</form>
+						<span id="results_page_range_total">0 result(s)</span>
+					</div>
+				</div>
+				<div id="docs"></div>
+				<div id="highlighting_snippets"></div>
+			</div>
+		</div>
+		<!-- div class="clear"></div -->
+		<div id="footer">
+			<div id="toggle_left" class="toggle_left" onclick="toggleLeftForm(true, true);">&nbsp;&lt;&lt;&nbsp;</div>
+			<div id="toggle_docs_list" class="toggle_docs_list" onclick="toggleDocsList(true, true);">&nbsp;&lt;&lt;&nbsp;</div>
+			<div id="open_all_parts" class="open_all_parts" onclick="toggleAllParts(false, true);">&nbsp;&lt;&lt;&lt;&nbsp;</div>
+			<div id="close_all_parts" class="close_all_parts" onclick="toggleAllParts(true, false);">&nbsp;&gt;&gt;&gt;&nbsp;</div>
+			<!-- div id="select_snippet" class="select_snippet unselectable" onselect="return false;" onselectstart="return false;" onclick="selectCurrentSnippet();">&nbsp;I&nbsp;</div -->
+			<input type="button" id="select_snippet" class="select_snippet" onclick="selectCurrentSnippet();" value="&nbsp;I&nbsp;">
+			<div id="select_all_snippets" class="select_all_snippets" onclick="selectAllSnippets();">&nbsp;II&nbsp;</div>
+		</div>
+	</div>
+</body>
+</html>

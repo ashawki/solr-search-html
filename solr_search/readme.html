@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Solr Search - Readme</title>
+<style type="text/css">
+* {padding:0;margin:0;}
+body {background:#fff url(images/solr_search_header.png) repeat-x;font-family:sans-serif;}
+a {color:#6998f0;text-decoration:none;}
+a:hover {text-decoration:underline;}
+img {border:none;}
+ul {padding-left:40px;}
+#wrap {max-width:1200px;margin:0px auto;}
+#header {height:90px;}
+#header h1 {padding:10px 0 5px 10px;}
+#header h2 {padding-left:10px;color:#444;}
+#article {margin-top:20px;font-size:90%;}
+#article * {padding-top:2px; padding-bottom:2px;}
+#article hr {padding: 0px 0px 0px 0px;}
+#article h3 {margin-top:20px;color:#666;}
+#article h4 {color:#666;}
+#articl_toc {margin-bottom:20px;}
+.line_small {font-size:90%;}
+.line_mini {font-size:40%;}
+.line_tiny {font-size:30%;}
+.line_sub1 {padding-left:40px;}
+.line_sub2 {padding-left:80px;}
+.line_sub3 {padding-left:120px;}
+.line_sub4 {padding-left:160px;}
+.line_sub5 {padding-left:200px;}
+.line_sub6 {padding-left:240px;}
+.line_sub9 {padding-left:360px;}
+.line_italic {font-style:italic;}
+.text_small {font-size:90%;}
+.text_blue {color:#0000ff;}
+.text_name {font-family:serif;}
+.text_code {font-family:monospace;font-weight:bold;}
+.text_label {font-size:90%;display:inline-block;min-width:140px;padding:0px 40px 0px 0px;}
+.text_code_label {display:inline-block;min-width:240px;padding:0px 40px 0px 0px;font-family:monospace;font-weight:bold;}
+.text_code_middle {font-family:monospace;font-weight:bold;display:inline-block;min-width:180px;padding:0px 40px 0px 0px;}
+</style>
+</head>
+<body>
+<div id="wrap">
+	<div id="header">
+		<h1><span class="text_name">Solr Search</span> <span class="line_tiny">(1.0.20140329)&nbsp;&nbsp;&nbsp;&nbsp;(<a href="solr_search.html">Search</a> | <a href="search_syntax.html">Syntax</a>)</span></h1>
+		<h2>Simple interface for Apache Solr<sup class="line_mini">TM</sup> search server</h2>
+	</div>
+	<div id="article">
+		<div id="articl_toc">
+		<div><a href="#article_about">About <span class="text_name">Solr Search</span></a></div>
+		<div><a href="#article_apache_projects">Used Apache Projects</a></div>
+		<div><a href="#article_setup_procedure">Setup Procedure</a></div>
+		<div class="line_sub1"><a href="#article_prerequisites">Prerequisites</a></div>
+		<div class="line_sub1"><a href="#article_assumed_configuration_values">Assumed Configuration Values</a></div>
+		<div class="line_sub1"><a href="#article_setup_files">Setup Files</a></div>
+		<div class="line_sub1"><a href="#article_setup_expanding_solr">Expanding <span class="text_code">solr_nutch_patched_configured.zip</span></a></div>
+		<div class="line_sub1"><a href="#article_solr_configuration">Solr Configuration</a></div>
+		<div class="line_sub1"><a href="#article_solr_collections">Solr Collections</a></div>
+		<div class="line_sub1"><a href="#article_nutch_configuration">Nutch Configuration</a></div>
+		<div class="line_sub1"><a href="#article_solr_search_configuration"><span class="text_name">Solr Search</span> Configuration</a></div>
+		<div class="line_sub1"><a href="#article_tomcat_configuration">Tomcat Configuration</a></div>
+		<div class="line_sub1"><a href="#article_start_service_tomcat_solr">Starting Solr Tomcat Windows Service</a></div>
+		<div class="line_sub1"><a href="#article_stop_service_tomcat_solr">Stopping Solr Tomcat Windows Service</a></div>
+		<div><a href="#article_indexing_files_to_solr_using_nutch">Indexing Files to Solr using Nutch</a></div>
+		<div class="line_sub1"><a href="#article_re_indexing_solr_collections">Re-Indexing Solr Collections</a></div>
+		<div><a href="#article_using_solr_search">Using <span class="text_name">Solr Search</span></a></div>
+		<div><a href="#article_solr_admin_interface">Using Solr Admin Interface</a></div>
+		<div><a href="#article_summary_directory_and_file_paths">Summary of Directory and File Paths in Configuration Files</a></div>
+		</div>
+		<hr>
+		<h3 id="article_about">About <span class="text_name">Solr Search</span></h3>
+		<div><span class="text_name">Solr Search</span> is a simple HTML interface for searching files which are indexed by <a href="http://lucene.apache.org/solr/">Apache Solr</a><sup class="line_mini">TM</sup>.</div>
+		<h3 id="article_apache_projects">Used Apache Projects</h3>
+		<div>For more information please refer to the documentation of the following projects from <a href="http://www.apache.org/">Apache Software Foundation</a>:</div>
+		<ul>
+		<li><a href="http://lucene.apache.org/">Apache Lucene</a><sup class="line_mini">TM</sup>:
+				<span class="line_small">a high-performance, full-featured text search engine library written entirely in Java.</span>
+		</li>
+		<li><a href="http://lucene.apache.org/solr/">Apache Solr</a><sup class="line_mini">TM</sup>:
+				<span class="line_small">a standalone enterprise search server. Solr uses the Lucene search library and extends it.</span>
+		</li>
+		<li><a href="http://nutch.apache.org/">Apache Nutch</a><sup class="line_mini">TM</sup>:
+				<span class="line_small">a highly extensible and scalable web crawler.</span>
+		</li>
+		<li><a href="http://tika.apache.org/">Apache Tika</a><sup class="line_mini">TM</sup>:
+				<span class="line_small">a toolkit that detects and extracts metadata and structured text content from various documents.</span>
+		</li>
+		<li><a href="http://tomcat.apache.org/">Apache Tomcat</a><sup class="line_mini">TM</sup>:
+				<span class="line_small">a web server which provides the software implementation of the Java Servlet and JavaServer Pages technologies.</span>
+		</li>
+		</ul>
+		<h3 id="article_setup_procedure">Setup Procedure</h3>
+		<div>The following sections describe a manual procedure, in Windows platform, for:</div>
+		<ul>
+		<li>Preparing Apache Solr and Nutch to index local and/or remote files.</li>
+		<li>Using Apache Solr and Nutch to index local or remote files.</li>
+		<li>Using <span class="text_name">Solr Search</span> interface to perform search operations using Apache Solr.</li>
+		</ul>
+		<h3 id="article_prerequisites">Prerequisites</h3>
+		<div class="line_sub1"><span class="text_label">JRE_HOME</span><span> (e.g. </span><span class="text_code text_blue">%ProgramFiles%\Java\jre7</span><span>), and</span></div>
+		<div class="line_sub1"><span class="text_label">JAVA_HOME</span><span> (e.g. </span><span class="text_code text_blue">D:\home\oracle\jdk1.7.0_51</span><span>)</span></div>
+		<div class="line_sub1"><span>(64-bit versions of JRE and JDK are recommended, in order to allow allocating higher capacity of memory by the processes of Solr and Nutch).</span></div>
+		<h3 id="article_assumed_configuration_values">Assumed Configuration Values</h3>
+		<div class="line_sub1">The below procedure uses some assumed values for directory paths and configuration parameters of Apache Nutch, Solr and Tomcat.</div>
+		<div class="line_sub1">Please substitute your chosen values for the assumed values throughout the steps of the whole procedure.</div>
+		<div class="line_sub2"><span class="text_label">Host name:</span><span class="text_code text_blue">home</span></div>
+		<div class="line_sub2"><span class="text_label">Solr directory:</span><span class="text_code text_blue">D:\home\programs\solr</span></div>
+		<div class="line_sub2"><span class="text_label">Solr home directory:</span><span class="text_code text_blue">D:\home\programs\solr\home\solr</span></div>
+		<div class="line_sub2"><span class="text_label">&nbsp;</span><span class="text_small">(the location under the main Solr installation where the configuration of Solr's collections (or cores) are stored).</span></div>
+		<div class="line_sub2"><span class="text_label">Solr data directory:</span><span class="text_code text_blue">D:\home\data\solr</span></div>
+		<div class="line_sub2"><span class="text_label">&nbsp;</span><span class="text_small">(the location which is used for storing data of Solr's collections).</span></div>
+		<div class="line_sub2"><span class="text_label">Solr log directory:</span><span class="text_code text_blue">D:\home\programs\solr\tomcat\logs</span></div>
+		<div class="line_sub2"><span class="text_label">Solr log file:</span><span class="text_code text_blue">solr.log</span></div>
+		<div class="line_sub2"><span class="text_label">Solr server URL:</span><span class="text_code text_blue">http://localhost:8983/solr</span></div>
+		<div class="line_sub2"><span class="text_label">Nutch directory:</span><span class="text_code text_blue">D:\home\programs\solr\nutch</span></div>
+		<div class="line_sub2"><span class="text_label">Nutch data directory:</span><span class="text_code text_blue">D:\home\data\solr\nutch</span></div>
+		<div class="line_sub2"><span class="text_label">Nutch tmp directory:</span><span class="text_code text_blue">D:\home\data\solr\nutch\tmp</span></div>
+		<div class="line_sub2"><span class="text_label">Nutch log directory:</span><span class="text_code text_blue">D:\home\programs\solr\nutch\logs</span></div>
+		<div class="line_sub2"><span class="text_label">Nutch log file:</span><span class="text_code text_blue">hadoop.log</span></div>
+		<div class="line_sub2"><span class="text_label">Tomcat directory:</span><span class="text_code text_blue">D:\home\programs\solr\tomcat</span></div>
+		<div class="line_sub2"><span class="text_label">Tomcat log directory:</span><span class="text_code text_blue">D:\home\programs\solr\tomcat\logs</span></div>
+		<div class="line_sub2"><span class="text_label">Tomcat host name:</span><span class="text_code text_blue">home</span></div>
+		<div class="line_sub2"><span class="text_label">Tomcat HTTP port:</span><span class="text_code text_blue">8983</span></div>
+		<div class="line_sub2"><span class="text_label">Tomcat user:</span><span class="text_code text_blue">(tomcat/tomcat)</span></div>
+		<div class="line_sub2"><span class="text_label"><span class="text_name">Solr Search</span> URL:</span><span class="text_code text_blue">http://localhost:8983/d/solr-search</span></div>
+		<div class="line_sub2"><span class="text_label"><span class="text_name">Solr Search</span> directory:</span><span class="text_code text_blue">D:\home\programs\solr_search</span></div>
+		<h3 id="article_setup_files">Setup Files</h3>
+		<div>The following files are used to prepare and start using <span class="text_name">Solr Search</span>:</div>
+		<ul>
+		<li><span class="text_code text_blue">solr_nutch_patched_configured.zip:</span>
+			<span class="line_small">an archive file which contains a pre-configured and patched files of Apache Solr, Nutch and Tomcat.</span>
+		</li>
+		<li><span class="text_code text_blue">solr_search.zip:</span>
+			<span class="line_small">an archive file which contains the files of <span class="text_name">Solr Search</span>.</span>
+		</li>
+		</ul>
+		<h3 id="article_setup_expanding_solr">Expanding <span class="text_code">solr_nutch_patched_configured.zip</span></h3>
+		<div>Expand <span class="text_code">solr_nutch_patched_configured.zip</span> file into a new directory in the file system.</div>
+		<div>It is assumed that <span class="text_code">solr_nutch_patched_configured.zip</span> is expanded into the following directory:</div>
+		<div class="line_sub1"><span class="text_code text_blue">D:\home\programs\solr</span></div>
+		<div>After expanding <span class="text_code">solr_nutch_patched_configured.zip</span> file,
+			<span class="text_code">D:\home\programs\solr</span> directory should contain the following sub-directories:
+		</div>
+		<ul>
+		<li><span class="text_code">D:\home\programs\</span><span class="text_code text_blue">solr: </span><span class="line_small">location of Apache Solr 4.6.1 files.</span>
+		<li><span class="text_code">D:\home\programs\solr\</span><span class="text_code text_blue">home\solr</span>: <span class="line_small">location of Solr collections home.</span>
+		<li><span class="text_code">D:\home\programs\solr\</span><span class="text_code text_blue">nutch</span>: <span class="line_small">location of Apache Nutch 1.8 files.</span>
+		<li><span class="text_code">D:\home\programs\solr\</span><span class="text_code text_blue">tomcat</span>: <span class="line_small">location of Apache Tomcat 7.0.50 files.</span>
+		</ul>
+		<h3 id="article_solr_configuration">Solr Configuration</h3>
+		<div class="line_sub1">Configuration values of Solr search server can be modified as required:</div>
+		<div class="line_sub2"><span class="text_label">Solr server WAR file path:</span></div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\tomcat\conf\Catalina\localhost\solr.xml</span></div>
+		<div class="line_sub4"><span class="text_code text_blue">docBase</span><span class="text_code">="D:/home/programs/solr/dist/solr-4.6.1.war"</span></div>
+		<div class="line_sub2"><span class="text_label">Solr home directory:</span></div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\tomcat\conf\Catalina\localhost\solr.xml</span></div>
+		<div class="line_sub4"><span class="text_code">&lt;Environment name="<span class="text_code text_blue">solr/home</span>" type="java.lang.String" value="D:/home/programs/solr/home/solr" override="true"/&gt;</span></div>
+		<div class="line_sub2"><span class="text_label">Solr log directory:</span></div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\tomcat\lib\log4j.properties</span></div>
+		<div class="line_sub4"><span class="text_code text_blue">solr.log</span><span class="text_code">=../logs/</span></div>
+		<h3 id="article_solr_collections">Solr Collections</h3>
+		<div class="line_sub1">When started, Solr server enumerates sub-directories in Solr home directory (<span class="text_code">D:\home\programs\solr\home\solr</span>), in order to determine the available Solr collections.</div>
+		<div class="line_sub1"><span class="text_code">solr_nutch_patched_configured.zip</span> archive contains two Solr collections: "Arabic" and "English".</div>
+		<div class="line_sub1">"Arabic" Solr collection:</div>
+		<div class="line_sub2">"Arabic" Solr collection is a copy of Solr empty collection example, "collection1". </div>
+		<div class="line_sub2">It uses a modified copy of schema-solr4.xml of Nutch:</div>
+		<!-- <div class="line_sub3">"<span class="text_code">text_ar</span>" is a new field type which is similar to "<span class="text_code">text_general</span>", but it uses two additional filters: <span class="text_code">solr.ArabicNormalizationFilterFactory</span> and <span class="text_code">solr.ArabicStemFilterFactory</span>.</div> -->
+		<div class="line_sub3">"<span class="text_code">text_ar</span>" is a new field type which is similar to "<span class="text_code">text_general</span>", but it uses an additional filters: <span class="text_code">solr.ArabicNormalizationFilterFactory</span>.</div>
+		<div class="line_sub3">In "Arabic" collection:</div>
+		<div class="line_sub4">Only <span class="text_code">content</span>, <span class="text_code">title</span>, <span class="text_code">text</span>, <span class="text_code">anchor</span> fields are configured to use "<span class="text_code">text_ar</span>" field type, instead of "<span class="text_code">text_general</span>" field type.</div>
+		<div class="line_sub4"><span class="text_code">solr.StopFilterFactory</span> filter uses <span class="text_code">lang/stopwords_ar.txt</span> file.</div>
+		<div class="line_sub4">If required, <span class="text_code">solr.ArabicStemFilterFactory</span> can be added to the configuration of "text_ar" field type.</div>
+		<div class="line_sub2">To modify the name of "Arabic" collection:</div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\home\solr\arabic\</span><span class="text_code text_blue">core.properties</span></div>
+		<div class="line_sub4"><span class="text_code text_blue">name</span><span class="text_code">=Arabic</span></div>
+		<div class="line_sub2">To modify the data directory of "Arabic" collection</div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\home\solr\arabic\</span><span class="text_code text_blue">conf\solrcore.properties</span></div>
+		<div class="line_sub4"><span class="text_code text_blue">solr.data.dir</span><span class="text_code">=D:/home/data/solr/arabic</span></div>
+		<div class="line_sub2">"Arabic" collection schema file:</div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\home\solr\arabic\</span><span class="text_code text_blue">conf\schema.xml</span></div>
+		<div class="line_sub1">"English" Solr collection:</div>
+		<div class="line_sub2">"English" Solr collection is a copy of Solr empty collection example, "collection1". </div>
+		<div class="line_sub2">It uses a copy of schema-solr4.xml of Nutch.</div>
+		<div class="line_sub2">To modify the name of "English" collection:</div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\home\solr\english\</span><span class="text_code text_blue">core.properties</span></div>
+		<div class="line_sub4"><span class="text_code text_blue">name</span><span class="text_code">=English</span></div>
+		<div class="line_sub2">To modify the data directory of "English" collection</div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\home\solr\english\</span><span class="text_code text_blue">conf\solrcore.properties</span></div>
+		<div class="line_sub4"><span class="text_code text_blue">solr.data.dir</span><span class="text_code">=D:/home/data/solr/english</span></div>
+		<div class="line_sub2">"English" collection schema file:</div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\home\solr\english\</span><span class="text_code text_blue">conf\schema.xml</span></div>
+		<div class="line_sub1">Adding a new Solr collection:</div>
+		<div class="line_sub2">Either copy:</div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\home\solr\arabic</span> directory</div>
+		<div class="line_sub2">Or</div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\home\solr\english</span> directory</div>
+		<div class="line_sub2">To a new directory into Solr home directory, for example:</div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\home\solr\</span><span class="text_code text_blue">collection2</span></div>
+		<div class="line_sub2">Modify the name of the new collection:</div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\home\solr\collection2\</span><span class="text_code text_blue">core.properties</span></div>
+		<div class="line_sub4"><span class="text_code text_blue">name</span><span class="text_code">=collection2</span></div>
+		<div class="line_sub2">Modify the data directory of the new collection:</div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\home\solr\collection2\</span><span class="text_code text_blue">conf\solrcore.properties</span></div>
+		<div class="line_sub4"><span class="text_code text_blue">solr.data.dir</span><span class="text_code">=D:/home/data/solr/collection2</span></div>
+		<div class="line_sub2">"collection2" collection schema file:</div>
+		<div class="line_sub4"><span class="text_code">D:\home\programs\solr\home\solr\collection2\</span><span class="text_code text_blue">conf\schema.xml</span></div>
+		<h3 id="article_nutch_configuration">Nutch Configuration</h3>
+		<h4 id="article_nutch_site_xml">nutch-site.xml</h4>
+		<div class="line_sub1">Configuration properties are read by Nutch from <span class="text_code text_blue">nutch-default.xml</span> file,
+								and then they are overriden by values in <span class="text_code text_blue">nutch-site.xml</span>:</div>
+		<div class="line_sub2"><span class="text_code">D:\home\programs\solr\nutch\conf\</span><span class="text_code text_blue">nutch-default.xml</span></div>
+		<div class="line_sub2"><span class="text_code">D:\home\programs\solr\nutch\conf\</span><span class="text_code text_blue">nutch-site.xml</span></div>
+		<div class="line_sub1"><span class="text_code">nutch-default.xml</span> should not be modifiedy by users.</div>
+		<div class="line_sub1">The following list shows a number of important configuration properties of Nutch 1.8:</div>
+		<div class="line_sub2"><span class="text_code_label">file.content.limit</span>
+								<span class="text_code_middle">-1</span><span class="text_small">(Default: </span><span class="text_code">65536</span><span class="text_small">)</span></div>
+		<div class="line_sub2"><span class="text_code_label">file.crawl.parent</span>
+								<span class="text_code_middle">false</span><span class="text_small">(Default: </span><span class="text_code">true</span><span class="text_small">)</span></div>
+		<div class="line_sub2"><span class="text_code_label">http.agent.name</span>
+								<span class="text_code_middle">My Nutch Spider</span><span class="text_small">(Default: )</span></div>
+		<div class="line_sub2"><span class="text_code_label">http.robots.agents</span>
+								<span class="text_code_middle">My Nutch Spider,*</span><span class="text_small">(Default: </span><span class="text_code">*</span><span class="text_small">)</span></div>
+		<div class="line_sub2"><span class="text_code_label">http.content.limit</span>
+								<span class="text_code_middle">-1</span><span class="text_small">(Default: </span><span class="text_code">65536</span><span class="text_small">)</span></div>
+		<div class="line_sub2"><span class="text_code_label">ftp.content.limit</span>
+								<span class="text_code_middle">-1</span><span class="text_small">(Default: </span><span class="text_code">65536</span><span class="text_small">)</span></div>
+		<div class="line_sub2"><span class="text_code_label">db.ignore.external.links</span>
+								<span class="text_code_middle">true</span><span class="text_small">(Default: </span><span class="text_code">false</span><span class="text_small">)</span></div>
+		<div class="line_sub2"><span class="text_code_label">db.max.outlinks.per.page</span>
+								<span class="text_code_middle">-1</span><span class="text_small">(Default: </span><span class="text_code">100</span><span class="text_small">)</span></div>
+		<div class="line_sub2"><span class="text_code_label">db.max.anchor.length</span>
+								<span class="text_code_middle">1048576</span><span class="text_small">(Default: </span><span class="text_code">100</span><span class="text_small">)</span></div>
+		<div class="line_sub2"><span class="text_code_label">fetcher.server.delay</span>
+								<span class="text_code_middle">0.0</span><span class="text_small">(Default: </span><span class="text_code">5.0</span><span class="text_small">)</span></div>
+		<div class="line_sub2"><span class="text_code_label">indexer.max.title.length</span>
+								<span class="text_code_middle">-1</span><span class="text_small">(Default: </span><span class="text_code">100</span><span class="text_small">)</span></div>
+		<div class="line_sub2"><span class="text_code_label">indexer.max.content.length</span>
+								<span class="text_code_middle">-1</span><span class="text_small">(Default: </span><span class="text_code">-1</span><span class="text_small">)</span></div>
+		<div class="line_sub2"><span class="text_code_label">plugin.includes</span></div>
+		<div class="line_sub9"><span class="text_code">protocol-(file|http)|urlfilter-regex|parse-(html|tika)|index-(basic|anchor)|indexer-solr|scoring-opic|urlnormalizer-(pass|regex|basic)</span></div>
+		<div class="line_sub9"><span class="text_small">Default: </span><span class="text_code">protocol-http|urlfilter-regex|parse-(html|tika)|index-(basic|anchor)|indexer-solr|scoring-opic|urlnormalizer-(pass|regex|basic)</span></div>
+		<div class="line_sub2"><span class="text_code_label">parser.character.encoding.default</span>
+								<span class="text_code_middle">windows-1256</span><span class="text_small">(Default: </span><span class="text_code">windows-1252</span><span class="text_small">)</span></div>
+		<div class="line_sub2"><span class="text_code_label">parser.timeout</span>
+								<span class="text_code_middle">3600</span><span class="text_small">(Default: </span><span class="text_code">30</span><span class="text_small">)</span></div>
+		<div class="line_sub2"><span class="text_code_label">fs.file.impl</span></div>
+		<div class="line_sub9"><span class="text_code">com.conga.services.hadoop.patch.HADOOP_7682.WinLocalFileSystem</span></div>
+		<div class="line_sub9"><span class="text_small">(Enables patch for issue HADOOP-7682 on Windows)</span></div>
+		<div class="line_sub2"><span class="text_code_label">hadoop.tmp.dir</span>
+								<span class="text_code_middle">D:/home/data/solr/nutch/tmp</span></div>
+		<h4 id="article_regex_urlfilter_txt">regex-urlfilter.txt</h4>
+		<div class="line_sub1"><span class="text_code text_blue">regex-urlfilter.txt</span> is used by RegexURLFilter plugin,
+								which can be used to limit the URLs that nutch attempts to fetch.</div>
+		<div class="line_sub1">Example 1: the following lines can be used in <span class="text_code">regex-urlfilter.txt</span>,
+								when only files in <span class="text_code">D:\home\library</span> directory are required to be fetched by Nutch.</div>
+		<div class="line_sub2"><span class="text_code"># skip http: ftp: and mailto: urls</span></div>
+		<div class="line_sub2"><span class="text_code">-^(http|ftp|mailto):</span></div>
+		<div class="line_sub2"><span class="text_code"># accept anything else in file:/D:/home/library/</span></div>
+		<div class="line_sub2"><span class="text_code">+^file:/D:/home/library/</span></div>
+		<div class="line_sub1">Example 2: the following lines can be used in <span class="text_code">regex-urlfilter.txt</span>,
+								when only files in <span class="text_code">http://localhost:8983/d/library/</span> website are required to be fetched by Nutch.</div>
+		<div class="line_sub2"><span class="text_code"># skip file: ftp: and mailto: urls</span></div>
+		<div class="line_sub2"><span class="text_code">-^(file|ftp|mailto):</span></div>
+		<div class="line_sub2"><span class="text_code"># accept anything else in http://localhost:8983/d/library/</span></div>
+		<div class="line_sub2"><span class="text_code">+^http://localhost:8983/d/library/</span></div>
+		<div class="line_sub1">Example 3: the following lines can be used in <span class="text_code">regex-urlfilter.txt</span>,
+								when only files in <span class="text_code">\\home\library</span> shared directory are required to be fetched by Nutch.</div>
+		<div class="line_sub2"><span class="text_code"># skip http: ftp: and mailto: urls</span></div>
+		<div class="line_sub2"><span class="text_code">-^(http|ftp|mailto):</span></div>
+		<div class="line_sub2"><span class="text_code"># accept anything else in file:////home/library</span></div>
+		<div class="line_sub2"><span class="text_code">+^file:////home/library</span></div>
+		<h4 id="article_nutch_configuration_more">More configuration files of Nutch</h4>
+		<div class="line_sub1">More configuration files, in <span class="text_code">conf</span> sub-directory, are used by Nutch, notably:</div>
+		<div class="line_sub2"><span class="text_code">D:\home\programs\solr\nutch\conf\</span><span class="text_code text_blue">regex-normalize.xml</span></div>
+		<div class="line_sub2"><span class="text_code">D:\home\programs\solr\nutch\conf\</span><span class="text_code text_blue">parse-plugins.xml</span></div>
+		<div class="line_sub2"><span class="text_code">D:\home\programs\solr\nutch\conf\</span><span class="text_code text_blue">subcollections.xml</span></div>
+		<div class="line_sub2"><span class="text_code">D:\home\programs\solr\nutch\conf\</span><span class="text_code text_blue">log4j.properties</span></div>
+		<h3 id="article_solr_search_configuration"><span class="text_name">Solr Search</span> Configuration</h3>
+		<div class="line_sub1">Expand <span class="text_code text_blue">solr_search.zip</span> file into a new directory in the file system.</div>
+		<div class="line_sub1">It is assumed that <span class="text_code">solr_search.zip</span> is expanded into the following directory:</div>
+		<div class="line_sub2"><span class="text_code text_blue">D:\home\programs\solr_search</span></div>
+		<div class="line_sub1"><span class="text_name">Solr Search</span> directory:</div>
+		<div class="line_sub2">The path of <span class="text_name">Solr Search</span> directory needs to be specified in <span class="text_code text_blue">d.xml</span> context of Tomcat:</div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\tomcat\conf\Catalina\localhost\</span><span class="text_code text_blue">d.xml</span></div>
+		<div class="line_sub4"><span class="text_code">&lt;Context docBase="D:/home/programs/solr/webapp_virtual_directory/" debug="0" crossContext="false" aliases="<span class="text_code text_blue">/solr-search</span>=D:/home/solr_search,<span class="text_code text_blue">/library</span>=D:/home/library/"&gt;&lt;/Context&gt;</span></div>
+		<div class="line_sub2"><span class="text_code text_blue">d.xml</span> is an arbitrary name of a Tomcat context.
+								Its name can be altered as preferred by the user.</div>
+		<div class="line_sub2">Based on the above definition of <span class="text_code">d.xml</span> Tomcat context:</div>
+		<div class="line_sub3"><span class="text_name">Solr Search</span> can be accessed by using the following URL:</div>
+		<div class="line_sub4"><span class="text_code text_blue">http://localhost:8983/d/solr-search</span></div>
+		<div class="line_sub3">Library virtual-directory can be accessed by using the following URL:</div>
+		<div class="line_sub4"><span class="text_code text_blue">http://localhost:8983/d/library</span></div>
+		<h3 id="article_tomcat_configuration">Tomcat Configuration</h3>
+		<div class="line_sub1">HTTP port which is used by Tomcat web server is determined by <span class="text_code text_blue">Port</span> value of "HTTP/1.1" protocol connector in <span class="text_code">server.xml</span> file:</div>
+		<div class="line_sub2"><span class="text_code">D:\home\programs\solr\tomcat\conf\</span><span class="text_code text_blue">server.xml</span></div>
+		<div class="line_sub1">Installing Solr Tomcat Windows Service</div>
+		<div class="line_sub2">(AS ADMINISTRATOR)</div>
+		<div class="line_sub3"><span class="text_code">cmd.exe</span></div>
+		<div class="line_sub3"><span class="text_code">D:</span></div>
+		<div class="line_sub3"><span class="text_code">cd D:\home\programs\solr\tomcat\bin</span></div>
+		<div class="line_sub3"><span class="text_code">set JRE_HOME=%ProgramFiles%\Java\jre7</span></div>
+		<div class="line_sub3"><span class="text_code">set CATALINA_HOME=D:\home\programs\solr\tomcat</span></div>
+		<div class="line_sub3">Rename <span class="text_code">D:\home\programs\solr\tomcat\bin\service.bat</span> to <span class="text_code">service1.bat</span></div>
+		<div class="line_sub3">Copy <span class="text_code">D:\home\programs\solr\tomcat\bin\service1.bat</span> to <span class="text_code">D:\home\programs\solr\tomcat\bin\service.bat</span></div>
+		<div class="line_sub3">Edit <span class="text_code">service.bat</span></div>
+		<div class="line_sub4">Line 89:</div>
+		<div class="line_sub5">Change <span class="text_code">set PR_DISPLAYNAME=Apache Tomcat %1</span></div>
+		<div class="line_sub5">To <span class="text_code">set PR_DISPLAYNAME=%1</span></div>
+		<div class="line_sub4">Line 162:</div>
+		<div class="line_sub5">Add <span class="text_code">-XX:MaxPermSize=256m;-Dsolr.velocity.enabled=false</span> to the end of <span class="text_code">++JvmOptions</span>,
+								and change <span class="text_code">--JvmMx 256</span> to <span class="text_code">--JvmMx 1G</span></div>
+		<div class="line_sub5">The updated line should be:</div>
+		<div class="line_sub6"><span class="text_code">"%EXECUTABLE%" //US//%SERVICE_NAME% ++JvmOptions "-Djava.io.tmpdir=%CATALINA_BASE%\temp;-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager;-Djava.util.logging.config.file=%CATALINA_BASE%\conf\logging.properties;-XX:MaxPermSize=256m;-Dsolr.velocity.enabled=false" --JvmMs 128 --JvmMx 1G</span></div>
+		<div class="line_sub4">Save <span class="text_code">service.bat</span></div>
+		<div class="line_sub3"><span class="text_code">service.bat install Solr</span></div>
+		<div class="line_sub3">Delete <span class="text_code">D:\home\programs\solr\tomcat\bin\service.bat</span></div>
+		<div class="line_sub3">Rename <span class="text_code">D:\home\programs\solr\tomcat\bin\service1.bat to D:\home\programs\solr\tomcat\bin\service.bat</span></div>
+		<div class="line_sub1">Uninstalling Solr Tomcat Windows Service</div>
+		<div class="line_sub2">(AS ADMINISTRATOR)</div>
+		<div class="line_sub3"><span class="text_code">cmd.exe</span></div>
+		<div class="line_sub3"><span class="text_code">D:</span></div>
+		<div class="line_sub3"><span class="text_code">cd D:\home\programs\solr\tomcat\bin</span></div>
+		<div class="line_sub3"><span class="text_code">set JRE_HOME=%ProgramFiles%\Java\jre7</span></div>
+		<div class="line_sub3"><span class="text_code">set CATALINA_HOME=D:\home\programs\solr\tomcat</span></div>
+		<div class="line_sub3"><span class="text_code">service.bat remove Solr</span></div>
+		<h3 id="article_start_service_tomcat_solr">Starting Solr Tomcat Windows Service</h3>
+		<div class="line_sub1">(AS ADMINISTRATOR)</div>
+		<div class="line_sub2">Either by using Services MMC snapin of Windows (services.msc)</div>
+		<div class="line_sub2">Or by using <span class="text_code">net.exe</span>:</div>
+		<div class="line_sub3"><span class="text_code">net.exe start solr</span></div>
+		<h3 id="article_stop_service_tomcat_solr">Stopping Solr Tomcat Windows Service</h3>
+		<div class="line_sub1">(AS ADMINISTRATOR)</div>
+		<div class="line_sub2">Either by using Services MMC snapin of Windows (services.msc)</div>
+		<div class="line_sub2">Or by using <span class="text_code">net.exe</span>:</div>
+		<div class="line_sub3"><span class="text_code">net.exe stop solr</span></div>
+		<h3 id="article_indexing_files_to_solr_using_nutch">Indexing Files to Solr using Nutch</h3>
+		<div class="line_sub1">If it does not exist, make an empty file: <span class="text_code">D:\home\programs\solr\bin\</span><span class="text_code text_blue">url\nutch.txt</span></div>
+		<div class="line_sub1"><span class="text_code text_blue">url</span> is an arbitrary sub-directory which contains files of "seed" url lists, to be passed to Nutch crawler.</div>
+		<div class="line_sub1">Edit <span class="text_code">D:\home\programs\solr\bin\url\nutch.txt</span></div>
+		<div class="line_sub2">Add or remove seed URLs. Seed URLs examples:</div>
+		<div class="line_sub4"><span class="text_code">file:/D:/home/library/</span></div>
+		<div class="line_sub3">Or,</div>
+		<div class="line_sub4"><span class="text_code">http://localhost:8983/d/library/</span></div>
+		<div class="line_sub3">Or,</div>
+		<div class="line_sub4"><span class="text_code">file:////home/library/</span></div>
+		<div class="line_sub1">Review Nutch configuration files thoroughly:</div>
+		<div class="line_sub2">Verify and/or revise both <span class="text_code">regex-urlfilter.txt</span> and <span class="text_code">regex-normalize.xml</span> files,
+								so that the only files, which will be crawled by Nutch, matches user requirements.</div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\nutch\conf\regex-normalize.xml</span></div>
+		<div class="line_sub3"><span class="text_code">D:\home\programs\solr\nutch\conf\regex-urlfilter.txt</span></div>
+		<div class="line_sub1">Start Solr Tomcat Windows service.</div>
+		<div class="line_sub1">Start Nutch crawler:</div>
+		<div class="line_sub2"><span class="text_code">cmd.exe</span></div>
+		<div class="line_sub2"><span class="text_code">D:</span></div>
+		<div class="line_sub2"><span class="text_code">cd D:\home\programs\solr\nutch\bin</span></div>
+		<div class="line_sub2"><span class="text_code">set NUTCH_JAVA_HOME=D:\home\oracle\jdk1.7.0_51</span></div>
+		<div class="line_sub2"><span>(Optional) </span><span class="text_code">set NUTCH_HEAPSIZE=2048</span><span class="text_small"> (2048 megabytes, default (if not specified) is: 1000 megabytes)</span></div>
+		<div class="line_sub2"><span>(Optional) </span><span class="text_code">set NUTCH_LOG_DIR</span><span class="text_small"> (default (if not specified) is: </span><span class="text_code">logs</span><span class="text_small"> sub-directory of nutch home directory)</span></div>
+		<!-- <div class="line_sub2"><span class="text_code text_blue">nutch.bat crawl urls -dir [dir name] -solr [solr url] -depth [depth] -topN [files]</span></div> -->
+		<!-- <div class="line_sub3"><span class="text_code">[dir name]</span>: will store the indexes from the crawl. Running the crawl again will also cause the files to be re-indexed if they are found.</div> -->
+		<!-- <div class="line_sub3"><span class="text_code">[solr url]</span></div> -->
+		<!-- <div class="line_sub3"><span class="text_code">[depth]</span>: how deep down a hierarchy do you wish to go</div> -->
+		<!-- <div class="line_sub3"><span class="text_code">[files]</span>: how many pages on each level should be indexed</div> -->
+		<div class="line_sub2"><span class="text_code text_blue">crawl.bat &lt;seedDir&gt; &lt;crawlDir&gt; &lt;solrURL&gt; &lt;numberOfRounds&gt;</span></div>
+		<div class="line_sub3"><span class="text_code">&lt;seedDir&gt;</span><span>: specifies dir + url file, e.g. urls/seed.txt, which is your txt file containing the urls you wish to crawl put on hdfs</span></div>
+		<div class="line_sub3"><span class="text_code">&lt;crawlDir&gt;</span><span>: the folder to query for crawl output ~ crawldb in Nutch 1.x.</span></div>
+		<div class="line_sub3"><span class="text_code">&lt;solrURL&gt;</span><span>: If you wish to index with solr, otherwise the solr-specific parts have to be removed from the crawl script</span></div>
+		<div class="line_sub3"><span class="text_code">&lt;numberOfRounds&gt;</span><span>: the number of iterations of generating, fetching and parsing. (In 1 iteration, it will process the number specified in the fetchlist, e.g. 50.000 => 50.000 urls per iteration are selected from the crawldb.)</span></div>
+		<div class="line_sub1">For more information, please refer to:</div>
+		<div class="line_sub2"><a href="http://wiki.apache.org/nutch/bin/crawl">http://wiki.apache.org/nutch/bin/crawl</a>,</div>
+		<div class="line_sub2"><a href="http://wiki.apache.org/nutch/NutchTutorial#A3.3._Using_the_crawl_script">http://wiki.apache.org/nutch/NutchTutorial#A3.3._Using_the_crawl_script</a>,</div>
+		<div class="line_sub2"><a href="http://wiki.apache.org/nutch/Nutch2Cassandra">http://wiki.apache.org/nutch/Nutch2Cassandra</a>,</div>
+		<div class="line_sub2"><a href="http://wiki.apache.org/nutch/bin/nutch_crawl">http://wiki.apache.org/nutch/bin/nutch_crawl</a>, and</div>
+		<div class="line_sub2"><a href="http://wiki.apache.org/nutch/CommandLineOptions">http://wiki.apache.org/nutch/CommandLineOptions</a></div>
+		<div class="line_sub2">Example:</div>
+		<!-- <div class="line_sub3"><span class="text_code text_blue">nutch.bat crawl urls -dir D:\home\data\solr\nutch -solr http://localhost:8983/solr/Arabic -depth 999 -topN 5</span></div> -->
+		<!-- <div class="line_sub2">Or,</div> -->
+		<!-- <div class="line_sub3"><span class="text_code text_blue">nutch.bat crawl urls -dir D:\home\data\solr\nutch -solr http://localhost:8983/solr -depth 999 -topN 5</span></div> -->
+		<div class="line_sub3"><span class="text_code text_blue">crawl.bat urls D:\home\data\solr\nutch http://localhost:8983/solr/ArabicCollection 9999999</span></div>
+		<div class="line_sub2">Or,</div>
+		<div class="line_sub3"><span class="text_code text_blue">crawl.bat urls D:\home\data\solr\nutch http://localhost:8983/solr/EnglishCollection 9999999</span></div>
+		<h3 id="article_re_indexing_solr_collections">Re-Indexing Solr Collections</h3>
+		<div class="line_sub1">Stop Solr Tomcat Windows service.</div>
+		<div class="line_sub1">Delete data directory of Nutch.</div>
+		<div class="line_sub2">Example: <span class="text_code">D:\home\data\solr\nutch</span></div>
+		<div class="line_sub2">This step will cause loosing Nutch data, which is required to perform incremental indexing updates for all Solr collections.</div>
+		<div class="line_sub1">If it is required to re-index files of a particular Solr collection, delete its corresponding Solr data directory.</div>
+		<div class="line_sub2">Example: <span class="text_code">D:\home\data\solr\arabic</span></div>
+		<div class="line_sub1">If it is required to re-index files of all Solr collections, delete the whole data directory of Solr.</div>
+		<div class="line_sub2">Example: <span class="text_code">D:\home\data\solr</span></div>
+		<div class="line_sub1">Execute steps of "Indexing files to Solr using Nutch" section.</div>
+		<h3 id="article_using_solr_search">Using <span class="text_name">Solr Search</span></h3>
+		<div class="line_sub1">Start Solr Tomcat Windows service.</div>
+		<div class="line_sub1"><span class="text_name">Solr Search</span> can be accessed at: <span class="text_code text_blue">http://localhost:8983/d/solr-search</span></div>
+		<h3 id="article_solr_admin_interface">Using Solr Admin Interface</h3>
+		<div class="line_sub1">Start Solr Tomcat Windows service</div>
+		<div class="line_sub1">Solr Admin interface can be accessed at: <span class="text_code text_blue">http://localhost:8983/solr</span></div>
+		<h3 id="article_summary_directory_and_file_paths">Summary of Directory and File Paths in Configuration Files</h3>
+		<div class="line_sub1"><span class="text_label">D:\home\programs\solr\tomcat\conf\Catalina\localhost\d.xml</span></div>
+		<div class="line_sub2"><span class="text_code">&lt;Context docBase="<span class="text_code text_blue">D:/home/programs/solr/webapp_virtual_directory/</span>" debug="0" crossContext="false" aliases="/solr-search=<span class="text_code text_blue">D:/home/solr_search</span>,/library=<span class="text_code text_blue">D:/home/library/</span>"&gt;&lt;/Context&gt;</span></div>
+		<div class="line_sub1"><span class="text_label">D:\home\programs\solr\tomcat\conf\Catalina\localhost\solr.xml</span></div>
+		<div class="line_sub2"><span class="text_code">&lt;Context docBase="<span class="text_code text_blue">D:/home/programs/solr/dist/solr-4.6.1.war</span>" debug="0" crossContext="true"&gt;&lt;Environment name="solr/home" type="java.lang.String" value="<span class="text_code text_blue">D:/home/programs/solr/home/solr</span>" override="true"/&gt;&lt;/Context&gt;</span></div>
+		<div class="line_sub1"><span class="text_label">D:\home\programs\solr\home\solr\arabic\conf\solrcore.properties</span></div>
+		<div class="line_sub2"><span class="text_code text_blue">solr.data.dir=D:/home/data/solr/arabic</span></div>
+		<div class="line_sub1"><span class="text_label">D:\home\programs\solr\home\solr\english\conf\solrcore.properties</span></div>
+		<div class="line_sub2"><span class="text_code text_blue">solr.data.dir=D:/home/data/solr/english</span></div>
+		<div class="line_sub1"><span class="text_label">D:\home\programs\solr\nutch\conf\nutch-site.xml</span></div>
+		<div class="line_sub2"><span class="text_code">&lt;property&gt;&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;&lt;value&gt;<span class="text_code text_blue">D:/home/data/solr/nutch/tmp</span>&lt;/value&gt;&lt;/property&gt;</span></div>
+		<div class="line_sub1"><span class="text_label">D:\home\programs\solr\nutch\conf\regex-urlfilter.txt</span></div>
+		<div class="line_sub2"><span class="text_code">+^</span><span class="text_code text_blue">file:/D:/home/library/</span></div>
+		<div class="line_sub1"><span class="text_label">D:\home\programs\solr\nutch\bin\urls\nutch.txt</span></div>
+		<div class="line_sub2"><span class="text_code text_blue">file:/D:/home/library/</span></div>
+		<div class="line_sub1"><span class="text_label">D:\home\programs\solr\nutch\bin\nutch_environment.bat</span></div>
+		<div class="line_sub2"><span class="text_code">set NUTCH_JAVA_HOME=</span><span class="text_code text_blue">D:\home\oracle\jdk1.7.0_51</span></div>
+		<div>&nbsp;</div>
+		<div>&nbsp;</div>
+		<div>&nbsp;</div>
+		<hr>
+		<div>&nbsp;</div>
+	</div>
+</div>
+</body>
+</html>

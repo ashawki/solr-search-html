@@ -1,0 +1,101 @@
+/* -------------------------------------------------------------------------- */
+* {padding:0;margin:0;}
+html {position:relative;height:100%;margin:0;}
+body {position:relative;height:100%;margin:0;overflow:auto;background:#fff url(../images/solr_search_header.png) repeat-x;font-family:sans-serif;}
+img {border:none;}
+a {color:#6998f0;text-decoration:none;}
+/*
+a:hover {color:#000;text-decoration:underline;}
+*/
+/* -------------------------------------------------------------------------- */
+/* #wrap {width:1200px;margin:0px auto;} */
+/* #wrap {height:100%;overflow:hidden;} */
+#wrap {position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;}
+/* #left {float:left;width:300px;padding:10px 0px 0px 0px;} */
+#left {position:absolute;left:0px;top:90px;bottom:0;width:308px;margin:0px 0px 16px 0px;padding:8px 6px 0px 8px;border-right:1px solid #aaa;overflow:auto;background-color:#FFFFFF;}
+/* #right {float:right;width:870px;padding:10px 0px 0px 20px;border-left:1px solid #aaa;min-height:500px;} */
+#right {position:absolute;left:323px;top:90px;bottom:0;right:0;margin:0px 0px 16px 0px;padding:8px 0px 0px 8px;overflow:hidden;background-color:#FFFFFF;}
+#footer {position:absolute;bottom:0;height:16px;width:100%;background-color:#C12211;border-top:1px solid #000000;}
+/* -------------------------------------------------------------------------- */
+.clear {clear:both;}
+.background_no_repeat {background-repeat:no-repeat;}
+.cursor_pointer {cursor:pointer;}
+/* .unselectable {-ms-user-select: none;-webkit-user-select: none;-moz-user-select: -moz-none;user-select: none;} */
+/* -------------------------------------------------------------------------- */
+.line_small {font-size:90%;}
+.line_mini {font-size:40%;}
+.line_tiny {font-size:30%;}
+.information {font-size:80%;color:#ff7b00;}
+.error {color:#ff0000;}
+.text_name {font-family:serif;}
+/* -------------------------------------------------------------------------- */
+#header {height:90px;}
+#header h1 {padding:10px 0 5px 10px;}
+#header h2 {padding-left:10px;color:#444;}
+/* -------------------------------------------------------------------------- */
+.search_result {
+	max-width:100%;margin:4px 0px 0px 0px;padding:0px 0px 4px 0px;border-bottom:1px solid #aaa;cursor:pointer;
+	font-family:monospace;font-size:90%;color:#0080C0;
+}
+.search_result_selected {
+	max-width:100%;margin:4px 0px 0px 0px;padding:0px 0px 4px 0px;border-bottom:1px solid #aaa;cursor:pointer;
+	background-color:#0080C0;font-family:monospace;font-size:90%;color:#FFFFFF;
+}
+/* .search_result_url {font-family:monospace;font-size:90%;color:#0080C0;} */
+.search_result_url {color:inherit;word-break:break-all;}
+.search_result_time_stamp {font-size:80%;color:#999;}
+.search_result_highlight_hidden {display:none;}
+/* -------------------------------------------------------------------------- */
+#search_results a {margin-right:5px;}
+#solr_q {display:none;}
+#solr_q_content {display:none;}
+#solr_fq {display:none;}
+#solr_select_url {display:none;}
+#solr_select_url_highlight {display:none;}
+#navigation {border-bottom:1px solid #000000;padding:0px 0px 8px 0px;}
+#pager,#pager-header {display:inline;font-size:90%;padding-right:8px;}
+#pager li,.links li {list-style-type:none;display:inline;}
+.results_page_form {display:none;float:right}
+.results_page_number {width:40px;text-align:center;margin-right:0px;}
+.results_page_go_button {width:40px;text-align:center;}
+#textarea_html_escape {display:none;}
+/* #docs {padding-top:1px;width:100%;overflow:auto;} */
+/* #docs {width:300px;overflow:auto;} */
+#docs {position:absolute;left:0px;top:36px;bottom:0;right:0;width:300px;margin:0px 0px 0px 8px;padding:0px 0px 0px 0px;overflow:auto;background-color:#FFFFFF;}
+#highlighting_snippets {position:absolute;left:300px;top:36px;bottom:0;right:0;margin:0px 0px 0px 8px;padding:0px 4px 0px 4px;overflow:auto;background-repeat:no-repeat;background-color:#FFFFFF;}
+.highlight_results_div {padding-bottom:4px;margin-bottom:4px;border-bottom:1px solid #999;font-size:90%;};
+.highlight_results_arrow {padding-right:8px;font-size:90%;}
+.highlight_results_error {color:#ff0000;font-family:monospace;font-size:90%;}
+/* -------------------------------------------------------------------------- */
+#left h3 {clear:left;margin-top:5px;margin-bottom:5px;color:#333;font-weight:normal;}
+/* -------------------------------------------------------------------------- */
+.tab_button_not_selected {padding:4px 4px 4px 4px;margin-right:8px;cursor:pointer;font-size:90%;color:#000000;background-color:#FFFFFF;border:1px solid #000000;border-radius:10px;outline-style:none;}
+.tab_button_selected {padding:4px 4px 4px 4px;margin-right:8px;cursor:pointer;font-size:90%;font-weight:bold;color:#ed893e;background-color:#444;border:1px solid #000000;border-radius:10px;outline-style:none;}
+.tab_div_not_selected {display:none;margin-top:16px;}
+.tab_div_selected {display:block;margin-top:16px;}
+/* -------------------------------------------------------------------------- */
+#left_form_box {border:1px solid;border-radius:25px;padding:10px 10px 20px 10px;}
+#current_search {min-height:100px;padding-bottom:8px;border-bottom:1px solid #000000;}
+#current_search .query_label {font-family:monospace;font-size:90%;font-weight:bold;}
+#current_search .query_value {font-size:90%;}
+form[name="form_left"] {margin-top:20px;}
+.field_label_search {font-family:monospace;font-size:90%;font-weight:bold;margin-bottom:6px;}
+.field_search {width:260px;padding:2px;margin-bottom:10px;}
+.field_select_search {width:260px;padding:2px;margin-bottom:10px;}
+.field_textarea_search {width:260px;padding:2px;margin-bottom:10px;font-family:sans-serif;}
+.field_submit_search {width:100px;padding:2px;margin-top:16px;}
+.field_label_options {display:inline-block;min-width:200px;font-family:monospace;font-size:90%;font-weight:bold;margin-bottom:6px;}
+.field_label_highlighting {display:inline-block;padding-left:20px;min-width:180px;font-family:monospace;font-size:90%;font-weight:bold;margin-bottom:6px;}
+.field_label_highlighting_short {display:inline-block;padding-left:20px;min-width:60px;font-family:monospace;font-size:90%;font-weight:bold;margin-bottom:6px;}
+.field_options {width:60px;padding:0px;margin-bottom:8px;}
+.field_options_long {width:180px;padding:0px;margin-bottom:8px;}
+.field_submit_options {width:60px;padding:2px;margin-top:16px;margin-left:20px;}
+/* -------------------------------------------------------------------------- */
+.toggle_header {position:absolute;top:0px;left:630px;border:1px solid #000000;color:#000000;background-color:#FCF2A6;cursor:pointer;font-weight:bold;font-size:60%;}
+.toggle_left {position:absolute;left:322px;border:1px solid #000000;color:#FFFFFF;background-color:#E96E31;cursor:pointer;font-weight:bold;font-size:80%;}
+.toggle_docs_list {position:absolute;left:630px;border:1px solid #000000;color:#FFFFFF;background-color:#E96E31;cursor:pointer;font-weight:bold;font-size:80%;}
+.open_all_parts {position:absolute;left:690px;border:1px solid #000000;color:#FFFFFF;background-color:#E96E31;cursor:pointer;font-weight:bold;font-size:80%;}
+.close_all_parts {position:absolute;left:750px;border:1px solid #000000;color:#FFFFFF;background-color:#E96E31;cursor:pointer;font-weight:bold;font-size:80%;}
+.select_snippet {position:absolute;left:810px;border:1px solid #000000;color:#FFFFFF;background-color:#E96E31;cursor:pointer;font-family:monospace;font-weight:bold;font-size:90%;max-width:40px;padding:0px 0px 0px 0px;margin:0px 0px 0px 0px;}
+.select_all_snippets {position:absolute;left:870px;border:1px solid #000000;color:#FFFFFF;background-color:#E96E31;cursor:pointer;font-family:monospace;font-weight:bold;font-size:100%;}
+/* -------------------------------------------------------------------------- */

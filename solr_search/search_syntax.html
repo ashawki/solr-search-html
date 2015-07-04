@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Solr Search - Search Syntax</title>
+<style type="text/css">
+* {padding:0;margin:0;}
+body {background:#fff url(images/solr_search_header.png) repeat-x;font-family:sans-serif;}
+a {color:#6998f0;text-decoration:none;}
+a:hover {text-decoration:underline;}
+img {border:none;}
+ul {padding-left:40px;}
+#wrap {max-width:1200px;margin:0px auto;}
+#header {height:90px;}
+#header h1 {padding:10px 0 5px 10px;}
+#header h2 {padding-left:10px;color:#444;}
+#article {margin-top:20px;font-size:90%;}
+#article * {padding-top:2px; padding-bottom:2px;}
+#article hr {padding: 0px 0px 0px 0px;}
+#article h2 {margin-top:20px;margin-bottom:10px;color:#666;}
+#article h3 {margin-top:20px;color:#666;}
+#article h4 {color:#666;}
+#articl_toc {margin-bottom:20px;}
+.line_small {font-size:90%;}
+.line_mini {font-size:40%;}
+.line_tiny {font-size:30%;}
+.line_sub1 {padding-left:40px;}
+.line_sub2 {padding-left:80px;}
+.line_sub3 {padding-left:120px;}
+.line_sub4 {padding-left:160px;}
+.line_sub5 {padding-left:200px;}
+.line_sub6 {padding-left:240px;}
+.line_sub9 {padding-left:360px;}
+.line_italic {font-style:italic;}
+.text_small {font-size:90%;}
+.text_blue {color:#0000ff;}
+.text_name {font-family:serif;}
+.text_code {font-family:monospace;font-weight:bold;}
+.text_label {font-size:90%;display:inline-block;min-width:140px;padding:0px 40px 0px 0px;}
+.text_code_label {display:inline-block;min-width:240px;padding:0px 40px 0px 0px;font-family:monospace;font-weight:bold;}
+.text_code_middle {font-family:monospace;font-weight:bold;display:inline-block;min-width:180px;padding:0px 40px 0px 0px;}
+.table_search_syntax {width:100%;border:1px solid #888;border-spacing: 0px;border-collapse:collapse;vertical-align:top;}
+.table_search_syntax_header_type {width:20%;border:1px solid #888;text-align:center;font-weight:bold;}
+.table_search_syntax_header_example {width:30%;border:1px solid #888;text-align:center;font-weight:bold;}
+.table_search_syntax_header_details {width:50%;border:1px solid #888;text-align:center;font-weight:bold;}
+.search_type {border:1px solid #888;padding:0px 2px 0px 2px;vertical-align:top;}
+.search_example {border:1px solid #888;font-family:monospace;padding:0px 4px 0px 4px;vertical-align:top;}
+.search_type_details {border:1px solid #888;font-size:80%;padding:0px 4px 0px 4px;vertical-align:top;}
+</style>
+</head>
+<body>
+<div id="wrap">
+	<div id="header">
+		<h1><span class="text_name">Solr Search</span> <span class="line_tiny">(1.0.20140329)&nbsp;&nbsp;&nbsp;&nbsp;(<a href="readme.html">Readme</a> | <a href="solr_search.html">Search</a>)</span></h1>
+		<h2>Simple interface for Apache Solr<sup class="line_mini">TM</sup> search server</h2>
+	</div>
+	<div id="article">
+		<h2 id="article_search_syntax">Search Syntax</h2>
+		<table class="table_search_syntax">
+			<tr>
+				<td class="table_search_syntax_header_type">Search Type</td>
+				<td class="table_search_syntax_header_example">Example</td>
+				<td class="table_search_syntax_header_details"></td>
+			</tr>
+			<tr><td class="search_type">Specifying Fields in a Query</td><td class="search_example"></td><td class="search_type_details">You can search any field by typing the field name followed by a colon ":" and then the term you are searching for within the field.<br>
+			If you do not specify a field in a query, Solr searches only the default field.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">title:apple</td><td class="search_type_details">Search for word "apple" in the title field.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">title:"green apple"</td><td class="search_type_details">Search for phrase "green apple" in the title field.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">title:"green apple" AND text:orange</td><td class="search_type_details">Find a document called "The Right Way" which contains the text "orange".</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">title:"green apple" AND orange </td><td class="search_type_details">Since text is the default field, the field indicator is not required.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">title:green apple </td><td class="search_type_details">The field is only valid for the term that it directly precedes.<br>
+			The example query will find only "green" in the title field. It will find "apple" in the default field.</td></tr>
+			<tr><td class="search_type">Grouping Terms to Form Sub-Queries</td><td class="search_example"></td><td class="search_type_details">Using parentheses is supported to group clauses to form sub-queries. To apply two or more Boolean operators to a single field in a search, group the Boolean clauses within parentheses.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">(jakarta OR apache) AND website</td><td class="search_type_details">Searches for either "jakarta" or "apache" and "website":</td></tr>
+			<tr><td class="search_type">Field Grouping (Grouping Clauses within a Field)</td><td class="search_example"></td><td class="search_type_details">Using parentheses is supported to group multiple clauses to a single field.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">title:(+return +"pink panther")</td><td class="search_type_details">Searches for a title field that contains both the word "return" and the phrase "pink panther".</td></tr>
+			<tr><td class="search_type">Regular Expression Searches</td><td class="search_example"></td><td class="search_type_details">Regular expression searches match patterns between forward slashes "/". The syntax may change across releases, but the current supported syntax is documented in the RegExp class.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">/[mb]oat/</td><td class="search_type_details">Finds documents containing "moat" or "boat".</td></tr>
+			<tr><td class="search_type">Wildcard Searches</td><td class="search_example"></td><td class="search_type_details">Wildcard characters can be applied to single terms, but not to search phrases.<br>
+			The single character wildcard search (?) looks for terms that match that with the single character replaced.<br>
+			Multiple character wildcard searches (*) looks for 0 or more characters.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">te?t</td><td class="search_type_details">Matches both test and text.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">tes*</td><td class="search_type_details">Matches test, tests, testing, and tester.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">title:foo*</td><td class="search_type_details">Searches for any word that starts with "foo" in the title field.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">te*t</td><td class="search_type_details">Matches test and text.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">title:foo*bar</td><td class="search_type_details">Searches for any word that starts with “foo” and ends with “bar” in the title field.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example"></td><td class="search_type_details">As of Solr 1.4, * or ? symbols can be used as the first character of a search with the standard query parser.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">*est</td><td class="search_type_details">Matches pest and test.</td></tr>
+			<tr><td class="search_type">Finding all documents</td><td class="search_example">*:*</td><td class="search_type_details"></td></tr>
+			<tr><td class="search_type">Range Searches</td><td class="search_example"></td><td class="search_type_details">Range search matches documents whose values for the specified field (or fields) fall within the range with an upper bound and a lower bound.<br>
+			Range queries can be inclusive or exclusive of the upper and lower bounds. Sorting is done lexicographically, except on numeric fields.<br>
+			Square brackets [ ] denote an inclusive range query that matches values including the upper and lower bound.<br>
+			Curly brackets { } denote an exclusive range query that matches values between the upper and lower bounds, but excluding the upper and lower bounds themselves.<br>
+			You can mix these types so one end of the range is inclusive and the other is exclusive.<br>
+			Solr's built-in field types are very convenient for performing range queries on numbers without requiring padding.<br>
+			Range queries are not limited to date fields or numerical fields.<br>
+			A * may be used for either or both endpoints to specify an open-ended range query.<br>
+			NOTE: TO must be uppercase, or Solr will report a 'RANGE_GOOP' error.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">title:{Aida TO Carmen}</td><td class="search_type_details">This will find all documents whose titles are between Aida and Carmen, but not including Aida and Carmen.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">FieldValue:[1 TO *]</td><td class="search_type_details">For numeric ranges. Similar to: SELECT field_value FROM my_table WHERE field_value &gt; 0;</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">count:{1 TO 10]</td><td class="search_type_details"></td></tr>
+			<tr><td class="search_type"></td><td class="search_example">field:[* TO 100]</td><td class="search_type_details">Finds all field values less than or equal to 100.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">field:[100 TO *]</td><td class="search_type_details">Finds all field values greater than or equal to 100.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">field:[* TO *]</td><td class="search_type_details">Matches all documents with the field.</td></tr>
+			<tr><td class="search_type">Specifying Dates and Times</td><td class="search_example"></td><td class="search_type_details"></td></tr>
+			<tr><td class="search_type"></td><td class="search_example">mod_date:[20020101 TO 20030101]</td><td class="search_type_details">Matches all documents whose mod_date field has a value between 20020101 and 20030101, inclusive.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">timestamp:[* TO NOW]</td><td class="search_type_details"></td></tr>
+			<tr><td class="search_type"></td><td class="search_example"></td><td class="search_type_details">To specify values for TrieDateField or Solr "DateField" type use ISO 8601 Date or DateMath syntax.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">modify_date:"2012-07-06T9:23:43Z"</td><td class="search_type_details">Exact matching.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">createdate:[1995-12-31T23:59:59.999Z TO 2007-03-06T00:00:00Z]</td><td class="search_type_details"></td></tr>
+			<tr><td class="search_type"></td><td class="search_example">modify_date:{* TO 2012-07-06T9:23:43Z}</td><td class="search_type_details">Less than.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">modify_date:[* TO 2012-07-06T9:23:43Z]</td><td class="search_type_details">Less or equal than.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">modify_date:{2012-07-06T9:23:43Z TO *}</td><td class="search_type_details">More than.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">modify_date:[2012-07-06T9:23:43Z TO *]</td><td class="search_type_details">More or equal than.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">createdate:[1976-03-06T23:59:59.999Z TO *]</td><td class="search_type_details"></td></tr>
+			<tr><td class="search_type"></td><td class="search_example"></td><td class="search_type_details"> datetime/DAY can be used to limit the query to dates only.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">createdate:[1976-03-06T23:59:59.999Z/DAY TO 1976-03-06T23:59:59.999Z+1YEAR/DAY]</td><td class="search_type_details">Compare days only and ignores time.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">createdate:[1976-03-06T23:59:59.999Z TO 1976-03-06T23:59:59.999Z+1YEAR]</td><td class="search_type_details"></td></tr>
+			<tr><td class="search_type"></td><td class="search_example">createdate:[1976-03-06T23:59:59.999Z/YEAR TO 1976-03-06T23:59:59.999Z]</td><td class="search_type_details"></td></tr>
+			<tr><td class="search_type"></td><td class="search_example">pubdate:[NOW-1YEAR/DAY TO NOW/DAY+1DAY]</td><td class="search_type_details"></td></tr>
+			<tr><td class="search_type">Field Not Null</td><td class="search_example">FieldName:['' TO *]</td><td class="search_type_details">To search a specific field where the field has non-null values. Similar to: SELECT field_name FROM my_table WHERE field_name IS NOT NULL;</td></tr>
+			<tr><td class="search_type">Escaping Special Characters</td><td class="search_example"></td><td class="search_type_details">Solr gives the following characters special meaning when they appear in a query:<br>
+			+ - &amp;&amp; || ! ( ) { } [ ] ^ " ~ * ? : /<br>
+			Those characters need to be escaped using quotes or a backslash if you want them to be treated as literals.<br>
+			To escape these characters (to make Solr interpret any of these characters literally, rather as a special character), precede the character with a backslash character \.<br>
+			Solr 4.0 added regular expression support, which means that '/' is now a special character and must be escaped if searching for literal forward slash.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">\(1\+1\)\:2</td><td class="search_type_details">Searches for (1+1):2 (without having Solr interpret the plus sign and parentheses as special characters for formulating a sub-query with two terms).</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">"(1+1):2"</td><td class="search_type_details">Searches for (1+1):2.</td></tr>
+			<tr><td class="search_type">Boolean Operators</td><td class="search_example"></td><td class="search_type_details">Boolean operators allow terms to be combined through logic operators.<br>
+			By using Boolean operators, Boolean logic can be applied to queries, requiring the presence or absence of specific terms or conditions in fields in order to match documents.<br>
+			The standard query parser supports (AND, "+", OR, NOT and "-") as Boolean operators.<br>
+			The DisMax query parser supports only + and -.<br>
+			The OR operator is the default conjunction operator. This means that if there is no Boolean operator between two terms, the OR operator is used.<br>
+			When specifying Boolean operators with keywords such as AND or NOT, the keywords must appear in all uppercase.<br>
+			In the schema.xml file, you can specify which symbols can take the place of Boolean operators such as OR.</td></tr>
+			<tr><td class="search_type">The Boolean Operator OR (||)</td><td class="search_example"></td><td class="search_type_details">The OR operator links two terms and finds a matching document if either of the terms (or both terms) exist in a document.<br>
+			The OR operator is the default conjunction operator. This means that if there is no Boolean operator between two terms, the OR operator is used.<br>
+			The symbol || can be used in place of the word OR.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">"jakarta apache" Jakarta</td><td class="search_type_details">Searches for documents that contain either "jakarta apache" or just "jakarta".</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">"jakarta apache" OR Jakarta</td><td class="search_type_details">Searches for documents that contain either "jakarta apache" or just "jakarta".</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">"jakarta apache" || jakarta</td><td class="search_type_details">Searches for documents that contain either "jakarta apache" or just "jakarta".</td></tr>
+			<tr><td class="search_type">The Boolean Operator AND (&amp;&amp;)</td><td class="search_example"></td><td class="search_type_details">The AND operator matches documents where both terms exist anywhere in the text of a single document.<br>
+			The symbol &amp;&amp; can be used in place of the word AND.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">"jakarta apache" AND "Apache Lucene"</td><td class="search_type_details">Searches for documents that contain "jakarta apache" and "Apache Lucene".</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">"jakarta apache" &amp;&amp; "Apache Lucene"</td><td class="search_type_details">Searches for documents that contain "jakarta apache" and "Apache Lucene".</td></tr>
+			<tr><td class="search_type">The Boolean Operator NOT (!)</td><td class="search_example"></td><td class="search_type_details">The NOT operator excludes documents that contain the term after NOT.<br>
+			The symbol ! can be used in place of the word NOT.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">"jakarta apache" NOT "Apache Lucene"</td><td class="search_type_details">Searches for documents that contain the phrase "jakarta apache" but do not contain the phrase "Apache Lucene".</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">"jakarta apache" ! "Apache Lucene"</td><td class="search_type_details">Searches for documents that contain the phrase "jakarta apache" but do not contain the phrase "Apache Lucene".</td></tr>
+			<tr><td class="search_type"></td><td class="search_example"></td><td class="search_type_details">The NOT operator cannot be used with just one term.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">NOT "jakarta apache"</td><td class="search_type_details">Will return no results.</td></tr>
+			<tr><td class="search_type">The Boolean Operator +</td><td class="search_example"></td><td class="search_type_details">The "+" (or "required" operator) requires that the term after the "+" symbol exist somewhere in the field of a single document.<br>
+			This operator is supported by both the standard query parser and the DisMax query parser.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">+jakarta lucene</td><td class="search_type_details">Searches for documents that must contain "jakarta" and that may or may not contain "lucene".</td></tr>
+			<tr><td class="search_type">The Boolean Operator -</td><td class="search_example"></td><td class="search_type_details">The "-" (or "prohibit" operator) excludes documents that contain the term after the "-" symbol. </td></tr>
+			<tr><td class="search_type"></td><td class="search_example">"jakarta apache" -"Apache Lucene"</td><td class="search_type_details">Searches for documents that contain "jakarta apache" but not "Apache Lucene"</td></tr>
+			<tr><td class="search_type"></td><td class="search_example"></td><td class="search_type_details">Pure negative queries (all clauses prohibited) are allowed (only as a top-level clause).</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">-inStock:false</td><td class="search_type_details">Finds all field values where inStock is not false.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">-field:[* TO *]</td><td class="search_type_details">Finds all documents without a value for field.</td></tr>
+			<tr><td class="search_type">Fuzzy Searches</td><td class="search_example"></td><td class="search_type_details">Fuzzy searches are supported based on the Damerau-Levenshtein Distance or Edit Distance algorithm. Fuzzy searches discover terms that are similar to a specified term without necessarily being an exact match.<br>
+			To perform a fuzzy search, use the tilde ~ symbol at the end of a single-word term.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">roam~</td><td class="search_type_details">Searches for a term similar in spelling to "roam". This search will match terms like foam and roams. It will also match the word "roam" itself.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example"></td><td class="search_type_details">An optional, additional parameter specifies the degree of similarity required for a match in a fuzzy search. The value must be between 0 and 1. When set closer to 1, the optional parameter causes only terms with a higher similarity to be matched.<br>
+			If this numerical parameter is omitted, Lucene performs the search as though the parameter were set to 0.5.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">roam~0.8</td><td class="search_type_details">Requires a high degree of similarity to the term "roam" in order for Solr to return a match.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example"></td><td class="search_type_details">The sample query above is not very scalable. Upon parsing this query will check the quasi-edit distance for every term in the index. As a result, this query is practical for only very small indexes.<br>
+			In many cases, stemming (reducing terms to a common stem) can produce similar effects to fuzzy searches and wildcard searches.</td></tr>
+			<tr><td class="search_type">Proximity Searches</td><td class="search_example"></td><td class="search_type_details">A proximity search looks for terms that are within a specific distance from one another. The distance referred to here is the number of term movements needed to match the specified phrase.<br>
+			To perform a proximity search, add the tilde character ~ and a numeric value to the end of a search phrase.<br>
+			Note that for proximity searches, exact matches are proximity zero, and word transpositions are proximity 1.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">"jakarta apache"~10</td><td class="search_type_details">Searches for a "apache" and "jakarta" within 10 words of each other in a document.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example"></td><td class="search_type_details">In the example above, if "apache" and "jakarta" were 10 spaces apart in a field, but "apache" appeared before "jakarta", more than 10 term movements would be required to move the terms together and position "apache" to the right of "jakarta" with a space in between.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">"foo bar"~4</td><td class="search_type_details">Searches for "foo bar" within 4 words from each other.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">"foo bar"~10000000</td><td class="search_type_details">A query such as "foo bar"~10000000 is an interesting alternative to foo AND bar.
+			Whilst both queries are effectively equivalent with respect to the documents that are returned, the proximity query assigns a higher score to documents for which the terms foo and bar are closer together.<br>
+			The trade-off, is that the proximity query is slower to perform and requires more CPU.<br>
+			Solr DisMax and eDisMax query parsers can add phrase proximity matches to a user query.</td></tr>
+			<tr><td class="search_type">Boosting a Term</td><td class="search_example"></td><td class="search_type_details">Lucene/Solr provides the relevance level (scores) of matching documents based on the terms found. Boosting allows you to control the relevance of a document by boosting its term.<br>
+			To boost a term use the caret symbol ^ with a boost factor (a number) at the end of the term you are searching. The higher the boost factor, the more relevant the term will be.<br>
+			By default, the boost factor is 1. Although the boost factor must be positive, it can be less than 1 (for example, it could be 0.2).<br>
+			Phrases can be boosted also.<br>
+			You should carefully examine explain output to determine the appropriate boost weights.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">jakarta^4 apache</td><td class="search_type_details">Makes documents with the term jakarta appear more relevant.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">"jakarta apache"^4 "Apache Lucene"</td><td class="search_type_details"></td></tr>
+			<tr><td class="search_type"></td><td class="search_example">(title:foo OR title:bar)^1.5 (body:foo OR body:bar)</td><td class="search_type_details">A typical boosting technique is assigning higher boosts to title matches than to body content matches</td></tr>
+			<tr><td class="search_type">Local Parameters in Queries</td><td class="search_example"></td><td class="search_type_details">Local parameters are arguments in a Solr request that are specific to a query parameter. Local parameters provide a way to add meta-data to certain argument types such as query strings. (In Solr documentation, local parameters are sometimes referred to as LocalParams.)<br>
+			Local parameters are specified as prefixes to arguments. To specify a local parameter, insert the following before the argument to be modified:<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;Begin with {!<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;Insert any number of key=value pairs separated by white space.<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;End with } and immediately follow with the query argument.<br>
+			You may specify only one local parameters prefix per argument.<br>
+			Values in the key-value pairs may be quoted via single or double quotes, and backslash escaping works within quoted strings.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">q={!q.op=AND df=title}solr rocks</td><td class="search_type_details">Changes the default operator type to "AND" and the default field to "title". These local parameters would change the query to require a match on both "solr" and "rocks" while searching the "title" field by default.</td></tr>
+			<tr><td class="search_type">Nested Query</td><td class="search_example"></td><td class="search_type_details">To embed a query of another type in a lucene/solr query string, simply use the magic field name _query_.<br>
+			Quotes will often be necessary to encapsulate the nested query if it contains reserved characters.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">text:"roses are red" and _query_:"type:poems"</td><td class="search_type_details">Embeds a lucene query type:poems into another lucene query.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">text:hi and _query_:"{!dismax qf=title pf=title}how now brown cow"</td><td class="search_type_details">Embeds a dismax query in a normal lucene query.</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">_query_:"{!dismax qf=myfield}how now brown cow"</td><td class="search_type_details"></td></tr>
+			<tr><td class="search_type"></td><td class="search_example"></td><td class="search_type_details">You can use query() function to embed any other type of query in a function query, and do computations on the relevancy scores returned by that query.</td></tr>
+			<tr><td class="search_type">Specifying a Query Parser</td><td class="search_example"></td><td class="search_type_details">The type of a query can be specified in most places that accept a query string using LocalParams syntax.<br>
+			In standard Solr search handlers, the defType param can be used to specify the default type of the main query (ie: the q param) but it only affects the main query -- The default type of all other query parameters will remain "lucene".</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">{!lucene q.op=AND df=text}myfield:foo +bar -baz</td><td class="search_type_details">Specifies a lucene/solr query with a default operator of "AND" and a default field of "text".</td></tr>
+			<tr><td class="search_type"></td><td class="search_example">{!func}popularity</td><td class="search_type_details">Is equivalent to defType=func&amp;q=popularity in the standard Solr search handler.</td></tr>
+			<tr><td class="search_type">FunctionQuery</td><td class="search_example"></td><td class="search_type_details">FunctionQuery allows one to use the actual value of a field and functions of those fields in a relevancy score.<br>
+			More information: http://wiki.apache.org/solr/FunctionQuery</td></tr>
+		</table>
+		<div>&nbsp;</div>
+		<hr>
+		<h3>More Information:</h3>
+		<div class="line_sub1"><a href="http://www.apache.org/dyn/closer.cgi/lucene/solr/ref-guide/">http://www.apache.org/dyn/closer.cgi/lucene/solr/ref-guide/</a></div>
+		<div class="line_sub1"><a href="http://wiki.apache.org/solr/SolrQuerySyntax">http://wiki.apache.org/solr/SolrQuerySyntax</a></div>
+		<div class="line_sub1"><a href="http://wiki.apache.org/solr/FunctionQuery">http://wiki.apache.org/solr/FunctionQuery</a></div>
+		<div class="line_sub1"><a href="http://lucene.apache.org/solr/4_6_1/tutorial.html">http://lucene.apache.org/solr/4_6_1/tutorial.html</a></div>
+		<div class="line_sub1"><a href="http://lucene.apache.org/solr/4_7_0/tutorial.html">http://lucene.apache.org/solr/4_7_0/tutorial.html</a></div>
+		<div class="line_sub1"><a href="http://cwiki.apache.org/confluence/display/solr/The+Standard+Query+Parser">http://cwiki.apache.org/confluence/display/solr/The+Standard+Query+Parser</a></div>
+		<div class="line_sub1"><a href="http://lucene.apache.org/core/4_7_0/queryparser/org/apache/lucene/queryparser/classic/package-summary.html">http://lucene.apache.org/core/4_7_0/queryparser/org/apache/lucene/queryparser/classic/package-summary.html</a></div>
+		<div class="line_sub1"><a href="http://www.solrtutorial.com/solr-query-syntax.html">http://www.solrtutorial.com/solr-query-syntax.html</a></div>
+		<div class="line_sub1"><a href="http://searchhub.org/2009/03/31/nested-queries-in-solr/">http://searchhub.org/2009/03/31/nested-queries-in-solr/</a></div>
+		<div class="line_sub1"><a href="http://melikedev.com/2010/07/27/solr-field-not-null-searches/">http://melikedev.com/2010/07/27/solr-field-not-null-searches/</a></div>
+		<div>&nbsp;</div>
+		<hr>
+		<div>&nbsp;</div>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Solr Search - Quick Overview</title>
+<style type="text/css">
+* {padding:0;margin:0;}
+body {background:#fff url(images/solr_search_header.png) repeat-x;font-family:sans-serif;}
+a {color:#6998f0;text-decoration:none;}
+a:hover {text-decoration:underline;}
+img {border:none;}
+ul {padding-left:40px;}
+#wrap {max-width:1200px;margin:0px auto;}
+#header {height:90px;}
+#header h1 {padding:10px 0 5px 10px;}
+#header h2 {padding-left:10px;color:#444;}
+#article {margin-top:20px;font-size:90%;}
+#article * {padding-top:2px; padding-bottom:2px;}
+#article hr {padding: 0px 0px 0px 0px;}
+#article h2 {margin-top:20px;color:#666;}
+#article h3 {margin-top:20px;color:#666;}
+#article h4 {color:#666;}
+#articl_toc {margin-bottom:20px;}
+.line_small {font-size:90%;}
+.line_mini {font-size:40%;}
+.line_tiny {font-size:30%;}
+.line_sub1 {padding-left:40px;}
+.line_sub2 {padding-left:80px;}
+.line_sub3 {padding-left:120px;}
+.line_sub4 {padding-left:160px;}
+.line_sub5 {padding-left:200px;}
+.line_sub6 {padding-left:240px;}
+.line_sub9 {padding-left:360px;}
+.line_italic {font-style:italic;}
+.text_small {font-size:90%;}
+.text_blue {color:#0000ff;}
+.text_name {font-family:serif;}
+.text_code {font-family:monospace;font-weight:bold;}
+.text_label {font-size:90%;display:inline-block;min-width:140px;padding:0px 40px 0px 0px;}
+.text_code_label {display:inline-block;min-width:240px;padding:0px 40px 0px 0px;font-family:monospace;font-weight:bold;}
+.text_code_middle {font-family:monospace;font-weight:bold;display:inline-block;min-width:180px;padding:0px 40px 0px 0px;}
+.image {max-width:1000px;max-height:1000px;height:auto;width:auto;}
+</style>
+</head>
+<body>
+<div id="wrap">
+	<div id="header">
+		<h1><span class="text_name">Solr Search</span> <span class="line_tiny">(1.0.20140329)</span></h1>
+		<h2>Simple interface for Apache Solr<sup class="line_mini">TM</sup> search server</h2>
+	</div>
+	<div id="article">
+		<hr>
+		<h2 id="article_about"><span>"</span><span class="text_name">Solr Search</span><span>" Quick Overview</span></h2>
+		<div class="line_small">29-March-2014</div>
+		<div class="line_small">By Ahmed Shawki (ashawki@hotmail.com)</div>
+		<br>
+		<hr>
+		<br>
+		<div><b>1.</b> It is expected that the schema of Nutch (1.8) (or a compatible one) is used by the Solr collection (which will be queried).</div>
+		<div>The basic search interface allows the user to query indexed documents by using criteria in "file path", "file contents" (for highlighting), and an optional OR- filter query in both "file path" and "file contents" fields.</div>
+		<br>
+		<img src="images/basic_search.png" class="image">
+		<br>
+		<br>
+		<br>
+		<div><b>2.</b> The free search interface allows the user to enter free queries in both "q" and "fq" parameters of Solr.</div>
+		<br>
+		<img src="images/free_search.png" class="image">
+		<br>
+		<br>
+		<br>
+		<div><b>3.</b> The user can hide screen parts (header, search form, or documents list) one by one. Also, all parts can be made hidden in order to allow the user to focus on the highlighted search results:</div>
+		<br>
+		<img src="images/hiding_ui_parts.png" class="image">
+		<br>
+		<br>
+		<br>
+		<div><b>4.</b> Many options are available which allow customizing the user interface: including font sizes, font colors, number of documents per results page, number of highlighting snippets, highlighting html tags, etc.</div>
+		<br>
+		<img src="images/options.png" class="image">
+		<br>
+		<br>
+		<br>
+		<div><b>5.</b> Two help pages are accessible from the header:</div>
+		<div class="line_sub1">"Readme" page contains the details about setting up the environment.</div>
+		<div class="line_sub1">"Syntax" page contains a quick reference of Lucene/Solr Query Syntax.</div>
+		<br>
+		<img src="images/search_syntax.png" class="image">
+		<br>
+		<br>
+		<br>
+		<hr>
+		<br>
+	</div>
+</div>
+</body>
+</html>
